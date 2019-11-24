@@ -6,7 +6,7 @@ class Node:
         self.next = None
 
     def __str__(self):
-        return str(self.val) + ","
+        return str(self.val)
 
     def __repr__(self):
         return "Node({})".format(self.val)
@@ -15,19 +15,22 @@ class Node:
         assert self and other, "Can't compare with None"
         return self.val == other.val and self.next == other.next
 
+
 class LinkedList:
     __slots__ = "head", "current", "size"
 
-    def __init__(self):
+    def __init__(self, another_list=[]):
+
         self.head = None
         self.current = None
         self.size = 0
 
+        for item in another_list:
+            self.add(item)
+
     def __str__(self):
-        result = []
-        for node in self:
-            result.append(str(node))
-        return " ".join(result)
+        result = [str(node) for node in self]
+        return "[" + ",".join(result) + "]"
 
     def __iter__(self):
         self.current = self.head
@@ -35,6 +38,7 @@ class LinkedList:
 
     def __next__(self):
         next_node = self.current
+
         if next_node is None:
             raise StopIteration
 
@@ -45,16 +49,13 @@ class LinkedList:
         return self.size
 
     def __getitem__(self, item):
-        print("getitem was called")
         for index, node in enumerate(self):
             if index == item:
                 return node
 
     def __setitem__(self, key, value):
-        print("setitem was called")
         assert 0 <= key < len(self), "Wrong index"
         self[key].val = value
-
 
     def __eq__(self, other):
         return self.head == other.head
@@ -115,13 +116,13 @@ class LinkedList:
 
 
 def test():
-    my_list = LinkedList()
-    my_list.add(5)
-    my_list.add(10)
-    my_list.add(15)
-    my_list.add(20)
-    my_list.add(25)
-    my_list.add(30)
+    my_list = LinkedList([5, 10, 20, 30])
+    # my_list.add(5)
+    # my_list.add(10)
+    # my_list.add(15)
+    # my_list.add(20)
+    # my_list.add(25)
+    # my_list.add(30)
     print(my_list)
 
     my_list[3] = 999999999999999999
