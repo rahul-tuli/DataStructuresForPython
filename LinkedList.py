@@ -135,29 +135,24 @@ class LinkedList:
 
         :param index: The index at which value is to be inserted
         :param value: The value to be inserted at specified index
-        :return: True is insertion successful else False
+        :pre: index should be an integer and with [0, len(linked_list)]
         """
-        prev = None
-        if index >= self.size or index < 0:
+        assert isinstance(index, int)
+        if index > self.size or index < 0:
             raise IndexError
 
-        for i, node in enumerate(self):
-            if i == index:
-                if prev:
-                    next_element = prev.next
-                    prev.next = Node(value)
-                    prev.next.next = next_element
-                    self.size += 1
-                    return True
-
-                new_node = Node(value)
-                new_node.next = self.head
-                self.head = new_node
-                self.size += 1
-                return True
-
-            prev = node
-        return False
+        new_node = Node(value)
+        if index == 0:
+            new_node.next = self.head
+            self.head = new_node
+            self.size += 1
+        elif index == self.size:
+            self[index - 1].next = new_node
+        else:
+            prev = self[index - 1]
+            new_node.next = prev.next
+            prev.next = new_node
+        self.size += 1
 
     def get_list(self):
         return [node.val for node in self]
@@ -216,7 +211,6 @@ class TestLinkedList(unittest.TestCase):
         self.normal_list.remove(self.normal_list[0])
         self.linked_list.remove(self.linked_list[0].val)
         self._test_normal_list_and_linked_list()
-
 
 
 if __name__ == '__main__':
