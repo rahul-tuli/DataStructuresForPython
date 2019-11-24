@@ -26,7 +26,7 @@ class LinkedList:
         self.size = 0
 
         for item in another_list:
-            self.add(item)
+            self.append(item)
 
     def __str__(self):
         result = [str(node) for node in self]
@@ -51,29 +51,46 @@ class LinkedList:
     def __getitem__(self, item):
         for index, node in enumerate(self):
             if index == item:
-                return node
+                return node.val
+        raise KeyError
 
     def __setitem__(self, key, value):
-        assert 0 <= key < len(self), "Wrong index"
         self[key].val = value
 
     def __eq__(self, other):
         return self.head == other.head
 
-    def add(self, value):
+    def append(self, value):
         """
-        Add a value to the Linked List
-        :param value:
-        :return:
+        A function to append a value to the end of the linked list
+        :pre-condition: uses __getitem__():
+        :param value: Value to be appended
+        :return None
         """
         if self.head is None:
             self.head = Node(value)
 
         else:
-            for runner in self:
-                continue
-            runner.next = Node(value)
+            self[-1].next = Node(value)
         self.size += 1
+
+    def pop(self):
+        if self.head is None:
+            print("Nothing to pop, Take None")
+            return None
+
+        if self.head.next is None:
+            to_pop = self.head.val
+            self.head = None
+            self.size -= 1
+            return to_pop
+
+        to_pop = self[-1].val
+        del self[-1]
+        self[-2].next = None
+        self.size -= 1
+
+        return to_pop
 
     def remove(self, value):
         prev = None
@@ -83,11 +100,11 @@ class LinkedList:
                 if prev:
                     prev.next = node.next
                     self.size -= 1
-                    return node
+                    return node.val
 
                 self.head = self.head.next
                 self.size -= 1
-                return node
+                return node.val
             prev = node
         return False
 
@@ -114,20 +131,20 @@ class LinkedList:
             prev = node
         return False
 
+    def get_list(self):
+        return [node.val for node in self]
+
 
 def test():
-    my_list = LinkedList([5, 10, 20, 30])
-    # my_list.add(5)
-    # my_list.add(10)
-    # my_list.add(15)
-    # my_list.add(20)
-    # my_list.add(25)
-    # my_list.add(30)
-    print(my_list)
+    print("Creation via List")
+    linked_list = LinkedList(range(10))
+    print(linked_list)
 
-    my_list[3] = 999999999999999999
+    print("Appending -9999")
+    print("Before {}".format(linked_list))
+    linked_list.append(-9999)
+    print("After {}".format(linked_list))
 
-    print(my_list)
 
 
 if __name__ == '__main__':
