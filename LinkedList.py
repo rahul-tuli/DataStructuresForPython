@@ -11,16 +11,11 @@ class Node:
     def __repr__(self):
         return "Node({})".format(self.val)
 
-    # def __eq__(self, other):
-    #     # print("checking Node {}".format(self))
-    #     return self.val == other.val and self.next == other.next
+    def __eq__(self, other):
+        assert self and other, "Can't compare with None"
+        return self.val == other.val and self.next == other.next
 
-    # def __eq__(self, other):
-    #     assert self and other, "Comparision between a None objects is not possible"
-    #     return self.val == other.val
-
-
-class LinkedList(object):
+class LinkedList:
     __slots__ = "head", "current", "size"
 
     def __init__(self):
@@ -35,13 +30,10 @@ class LinkedList(object):
         return " ".join(result)
 
     def __iter__(self):
-        # print("Iter was called")
         self.current = self.head
         return self
 
     def __next__(self):
-        # print("next was called")
-
         next_node = self.current
         if next_node is None:
             raise StopIteration
@@ -130,39 +122,11 @@ def test():
     my_list.add(20)
     my_list.add(25)
     my_list.add(30)
-
-
-
     print(my_list)
 
     my_list[3] = 999999999999999999
 
     print(my_list)
-
-    #
-    # print("for loop output")
-    #
-    # for element in my_list:
-    #     print(element, end="\t")
-    #
-    # for i, element in enumerate(my_list):
-    #     print(i, ")", element, end="\t")
-    # my_list.remove(20)
-    # print(my_list)
-    #
-    # my_list.remove(5)
-    # print(my_list)
-    #
-    # my_list.insert(5, 2)
-    # print(my_list)
-    #
-    # print(len(my_list))
-    #
-    # print(my_list[len(my_list) - 1])
-    #
-    # [print(node, end=" ") for node in reversed(my_list)]
-    #
-    # print(my_list == my_list)
 
 
 if __name__ == '__main__':
