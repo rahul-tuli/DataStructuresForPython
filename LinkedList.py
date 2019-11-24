@@ -30,7 +30,7 @@ class LinkedList:
 
     def __str__(self):
         result = [str(node) for node in self]
-        return "[" + ",".join(result) + "]"
+        return "[" + ", ".join(result) + "]"
 
     def __iter__(self):
         self.current = self.head
@@ -49,9 +49,20 @@ class LinkedList:
         return self.size
 
     def __getitem__(self, item):
+        """
+        A function that returns the Node object at a particular index in the linked list
+        supports negative indexing
+
+        :precondition: index must be an integer between [-len(linked_list), len(linked_list) )
+        :param item: index of the item to get
+        :return: The Node at index = item
+        """
+        if item < 0:
+            item = self.size + item
+
         for index, node in enumerate(self):
             if index == item:
-                return node.val
+                return node
         raise KeyError
 
     def __setitem__(self, key, value):
@@ -63,7 +74,8 @@ class LinkedList:
     def append(self, value):
         """
         A function to append a value to the end of the linked list
-        :pre-condition: uses __getitem__():
+        uses __getitem__()
+
         :param value: Value to be appended
         :return None
         """
@@ -75,8 +87,13 @@ class LinkedList:
         self.size += 1
 
     def pop(self):
+        """
+        A function that pops the last element off the linked list
+
+        :return: The value at last element of the linked list
+        """
         if self.head is None:
-            print("Nothing to pop, Take None")
+            # print("Nothing to pop, Take None")
             return None
 
         if self.head.next is None:
@@ -86,15 +103,19 @@ class LinkedList:
             return to_pop
 
         to_pop = self[-1].val
-        del self[-1]
         self[-2].next = None
         self.size -= 1
 
         return to_pop
 
     def remove(self, value):
-        prev = None
+        """
+        A function that removes the first occurence of avalue in the linked list
 
+        :param value: The value to be removed
+        :return: The removed value, or False
+        """
+        prev = None
         for node in self:
             if node.val == value:
                 if prev:
@@ -108,7 +129,14 @@ class LinkedList:
             prev = node
         return False
 
-    def insert(self, value, index):
+    def insert(self, index, value):
+        """
+        A function to insert a value at a particular index in the linked list
+
+        :param index: The index at which value is to be inserted
+        :param value: The value to be inserted at specified index
+        :return: True is insertion successful else False
+        """
         prev = None
         if index >= self.size or index < 0:
             raise IndexError
@@ -146,6 +174,50 @@ def test():
     print("After {}".format(linked_list))
 
 
+import unittest
+
+
+class TestLinkedList(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.normal_list = list(range(10))
+        self.linked_list = LinkedList(range(10))
+
+    def _test_normal_list_and_linked_list(self):
+        self.assertEqual(self.normal_list, self.linked_list.get_list())
+
+    def test_get_list(self):
+        self.assertEqual(self.linked_list.get_list(), [node.val for node in self.linked_list])
+
+    def test_append(self):
+        self.normal_list.append(5)
+        self.linked_list.append(5)
+        self._test_normal_list_and_linked_list()
+
+    def test_insert(self):
+        self.normal_list.insert(3, -9999)
+        self.linked_list.insert(3, -9999)
+        self._test_normal_list_and_linked_list()
+
+    def test_pop(self):
+        self.normal_list.pop()
+        self.linked_list.pop()
+        self._test_normal_list_and_linked_list()
+
+    def test_pop_empty(self):
+        new_ll = LinkedList()
+        try:
+            new_ll.pop()
+            self.assertEqual([], new_ll.get_list())
+        except:
+            print("An error was thrown due to underflow")
+
+    def test_remove(self):
+        self.normal_list.remove(self.normal_list[0])
+        self.linked_list.remove(self.linked_list[0].val)
+        self._test_normal_list_and_linked_list()
+
+
 
 if __name__ == '__main__':
-    test()
+    unittest.main(verbosity=2)
