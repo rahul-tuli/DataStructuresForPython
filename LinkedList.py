@@ -1,5 +1,5 @@
 """A class that emulates a linked list"""
-from node import Node
+from SinglyLinkedListNode import Node
 from LinkedListExceptions import *
 
 
