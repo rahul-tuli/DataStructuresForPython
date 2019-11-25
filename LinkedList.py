@@ -2,41 +2,70 @@
 from SinglyLinkedListNode import Node
 from LinkedListExceptions import *
 
+__author__ = "Rahul Tuli"
+__email__ = "rt3991@rit.edu"
+__status__ = "Under-Development"
 
-class LinkedList:
+
+class LinkedList(object):
     __slots__ = "head", "current", "size"
 
-    def __init__(self, another_list=[]):
+    def __init__(self, values=[]):
+        """
+        A method to initialize a linked list, user may or may not give a initial
+        list of values
+
+        :param values: Optional, An Iterable of values to initialize Linked List
+                       with
+        """
         self.head = self.current = None
         self.size = 0
-        for item in another_list:
-            self.append(item)
+        self.extend(values)
 
     def __str__(self):
+        """
+        A method that returns a string representation of the current Linked List
+        :return: string representation of the Linked List
+        """
         result = [str(node) for node in self]
         return "[" + ", ".join(result) + "]"
 
+    def __len__(self):
+        """
+        A method that returns the current size of the LinkedList when len(..) is
+         called
+        :return: size of the Linked List
+        """
+        return self.size
+
     def __iter__(self):
+        """
+        A  method that returns an iterator for the Linked List
+        :return: self, which is an iterator
+        """
         self.current = self.head
         return self
 
     def __next__(self):
-        next_node = self.current
-        if next_node is None:
+        """
+        A method that returns the current state, and moves the pointer to the
+        next element in the Linked List
+        :return: current state
+        """
+        if self.current is None:
             raise StopIteration
+
+        next_node = self.current
         self.current = self.current.next
         return next_node
-
-    def __len__(self):
-        return self.size
 
     def __getitem__(self, item):
         """
         A function that returns the Node object at a particular index in the linked list
         supports negative indexing
-
         :precondition: index must be an integer between [-len(linked_list), len(linked_list) )
         :param item: index of the item to get
+        :exception : raises KeyError if index not in Linked List
         :return: The Node at index = item
         """
         assert isinstance(item, int)
@@ -49,16 +78,46 @@ class LinkedList:
         raise KeyError
 
     def __setitem__(self, key, value):
+        """
+        A method that sets the value of node at index = key to the new value
+        :param key: The index of Node in Linked List
+        :param value: The new Value
+        :return: None
+        """
         self[key].val = value
 
     def __eq__(self, other):
+        """
+        A method to recursively check equality of two Linked Lists
+        :param other: The second Linked List
+        :return: True if equal else False
+        """
         return self.head == other.head
 
     def get(self, index):
+        """
+        A method to get the value at a given Index
+        :param index: The index whose value is to be returned
+        :return: The value of Node at given index
+        """
         return self[index].val
 
     def set(self, index, value):
+        """
+        A method to set the value at a given Index
+        :param index: The index whose value is to be set
+        :return: None
+        """
         self[index] = value
+
+    def extend(self, values):
+        """
+        A method to extend the linked list with values in the given iterable
+        :param values: An iterable with values to be extended with
+        :return: None
+        """
+        for value in values:
+            self.append(value)
 
     def append(self, value):
         """
@@ -99,6 +158,13 @@ class LinkedList:
         return self._remove_at_index(index)
 
     def _remove_at_index(self, index=False):
+        """
+        A helper function internally used by pop, remove to remove element at a
+        given index
+        :param index: The index of element to be removed
+        :exception : raises ElementNotFoundError if element not present at index
+        :return: the removed element if successful else raises Exception
+        """
         if index is not False:
             if index == 0:
                 to_remove = self.head
@@ -153,4 +219,8 @@ class LinkedList:
         self.size += 1
 
     def get_list(self):
+        """
+        A method that returns a list representation of the linked list
+        :return: A list representation of the Linked List
+        """
         return [node.val for node in self]
