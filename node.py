@@ -1,3 +1,6 @@
+"""A class that emulates a Singly Linked List Node"""
+
+
 class Node:
     __slots__ = "val", "next"
 
@@ -14,3 +17,7 @@ class Node:
     def __eq__(self, other):
         assert self and other, "Can't compare with None"
         return self.val == other.val and self.next == other.next
+
+    def __lt__(self, other):
+        assert self and other
+        return self.val < other.val

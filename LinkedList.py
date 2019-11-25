@@ -1,15 +1,14 @@
+"""A class that emulates a linked list"""
 from node import Node
+from LinkedListExceptions import *
 
 
 class LinkedList:
     __slots__ = "head", "current", "size"
 
     def __init__(self, another_list=[]):
-
-        self.head = None
-        self.current = None
+        self.head = self.current = None
         self.size = 0
-
         for item in another_list:
             self.append(item)
 
@@ -23,10 +22,8 @@ class LinkedList:
 
     def __next__(self):
         next_node = self.current
-
         if next_node is None:
             raise StopIteration
-
         self.current = self.current.next
         return next_node
 
@@ -77,47 +74,52 @@ class LinkedList:
             self[-1].next = Node(value)
         self.size += 1
 
-    def pop(self):
+    def pop(self, index=None):
         """
         A function that pops the last element off the linked list
 
         :return: The value at last element of the linked list
         """
-        if self.head is None:
-            # print("Nothing to pop, Take None")
-            return None
+        if index is None:
+            index = -1
+        if len(self) == 0:
+            raise UnderFlow
 
-        if self.head.next is None:
-            to_pop = self.head.val
-            self.head = None
-            self.size -= 1
-            return to_pop
-
-        to_pop = self[-1].val
-        self[-2].next = None
-        self.size -= 1
-
-        return to_pop
+        return self._remove_at_index(index=index)
 
     def remove(self, value):
         """
         A function that removes the first occurence of avalue in the linked list
 
         :param value: The value to be removed
-        :return: The removed value, or False
+        :return: True if removed, else False
         """
-        prev = None
-        for node in self:
-            if node.val == value:
-                if prev:
-                    prev.next = node.next
-                    self.size -= 1
-                    return node.val
+        index = self.index_of(value)
+        return self._remove_at_index(index)
 
+    def _remove_at_index(self, index=False):
+        if index is not False:
+            if index == 0:
+                to_remove = self.head
                 self.head = self.head.next
-                self.size -= 1
-                return node.val
-            prev = node
+            else:
+                to_remove = self[index]
+                self[index - 1].next = self[index].next
+
+            self.size -= 1
+            return to_remove
+        raise ElementNotFoundError
+
+    def index_of(self, value):
+        """
+        Returns the index of first occurence of value in the linked list if found else False
+
+        :param value: The value to search for
+        :return: The index of first occurence of value in the linked list if found else False
+        """
+        for i, node in enumerate(self):
+            if node.val == value:
+                return i
         return False
 
     def insert(self, index, value):
@@ -147,16 +149,3 @@ class LinkedList:
 
     def get_list(self):
         return [node.val for node in self]
-
-
-def test():
-    print("Creation via List")
-    linked_list = LinkedList(range(10))
-    print(linked_list)
-
-    print("Appending -9999")
-    print("Before {}".format(linked_list))
-    linked_list.append(-9999)
-    print("After {}".format(linked_list))
-
-
