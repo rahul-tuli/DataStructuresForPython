@@ -39,6 +39,7 @@ class LinkedList:
         :param item: index of the item to get
         :return: The Node at index = item
         """
+        assert isinstance(item, int)
         if item < 0:
             item = self.size + item
 
@@ -131,6 +132,9 @@ class LinkedList:
         :pre: index should be an integer and with [0, len(linked_list)]
         """
         assert isinstance(index, int)
+        if index < 0:
+            index = self.size + index
+
         if index > self.size or index < 0:
             raise IndexError
 
@@ -138,8 +142,9 @@ class LinkedList:
         if index == 0:
             new_node.next = self.head
             self.head = new_node
-            self.size += 1
+            # self.size += 1
         elif index == self.size:
+            print(index)
             self[index - 1].next = new_node
         else:
             prev = self[index - 1]

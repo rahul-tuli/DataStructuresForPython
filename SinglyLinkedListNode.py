@@ -15,7 +15,11 @@ class Node:
         return "Node({})".format(self.val)
 
     def __eq__(self, other):
-        assert self and other, "Can't compare with None"
+        # assert self and other, "Can't compare with None"
+        if self is None and other is None:
+            return True
+        if self is None or other is None:
+            return False
         return self.val == other.val and self.next == other.next
 
     def __lt__(self, other):
