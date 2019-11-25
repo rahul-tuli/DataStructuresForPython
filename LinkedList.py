@@ -54,7 +54,6 @@ class LinkedList(object):
         """
         if self.current is None:
             raise StopIteration
-
         next_node = self.current
         self.current = self.current.next
         return next_node
