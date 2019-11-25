@@ -22,32 +22,17 @@ class TestLinkedList(unittest.TestCase):
 
     def test_insert(self):
         start, mid, end = 0, len(self.normal_list) // 2, -1
-        for i in start, mid, end:
-            print("Trying to insert at i = {} \n LL: {},\n NL: {} ".format(i,
-                                                                           self.linked_list,
-                                                                           self.normal_list))
 
+        for i in start, mid, end:
             self.normal_list.insert(i, i)
             self.linked_list.insert(index=i, value=i)
-            print("After insertion at i = {} \n LL: {},\n NL: {} ".format(i,
-                                                                          self.linked_list,
-                                                                          self.normal_list))
             self._test_normal_list_and_linked_list()
 
-        print("Before insertion at i = {} \n LL: {},\n NL: {} ".format(
-            len(self.linked_list),
-            self.linked_list,
-            self.normal_list))
-        self.test_size()
         self.linked_list.insert(index=len(self.linked_list), value=1)
         self.normal_list.insert(len(self.normal_list), 1)
-
-        print("After insertion at i = {} \n LL: {},\n NL: {} ".format(
-            len(self.linked_list),
-            self.linked_list,
-            self.normal_list))
         self._test_normal_list_and_linked_list()
 
+        # Index Error positive and negative
         try:
             self.linked_list.insert(index=len(self.linked_list) + 2, value=3)
             return False
@@ -135,6 +120,17 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list1, list2)
         self.assertNotEqual(list1, LinkedList())
 
+    def test_sorted(self):
+        ll = LinkedList([5, 4, 3, 2, 1])
+        nl = [5, 4, 3, 2, 1]
+
+        for ll_node, nl_val in zip(sorted(ll), sorted(nl)):
+            self.assertEqual(ll_node.val, nl_val)
+
+    def test_repr_head(self):
+        ll = LinkedList([5])
+        self.assertEqual(repr(ll[0]), "Node(5)")
+
 
 if __name__ == '__main__':
-    unittest.main(verbosity=3)
+    unittest.main(verbosity=2)
