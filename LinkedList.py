@@ -94,6 +94,17 @@ class LinkedList(object):
         """
         return self.head == other.head
 
+    def __add__(self, other):
+        """
+        A method to connect two linked lists via '+' operator
+        :param other: The second linked list
+        :return:
+        """
+        assert other
+        for current in self:
+            continue
+        current.next = other.head
+
     def get(self, index):
         """
         A method to get the value at a given Index
