@@ -107,12 +107,12 @@ class TestLinkedList(unittest.TestCase):
         non_empty_ll = LinkedList(range(10))
         self.assertEqual(str(non_empty_ll), str(list(range(10))))
 
-    def test_key_error(self):
+    def test_index_error(self):
         try:
             empty_ll = LinkedList()
             empty_ll[4]
             return False
-        except KeyError:
+        except IndexError:
             pass
 
     def test_set_item(self):

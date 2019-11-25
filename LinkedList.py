@@ -27,8 +27,7 @@ class LinkedList(object):
         A method that returns a string representation of the current Linked List
         :return: string representation of the Linked List
         """
-        result = [str(node) for node in self]
-        return "[" + ", ".join(result) + "]"
+        return "[" + ", ".join([str(node) for node in self]) + "]"
 
     def __len__(self):
         """
@@ -71,10 +70,12 @@ class LinkedList(object):
         if item < 0:
             item = self.size + item
 
+        if item < 0 or item >= self.size:
+            raise IndexError
+
         for index, node in enumerate(self):
             if index == item:
                 return node
-        raise KeyError
 
     def __setitem__(self, key, value):
         """
@@ -146,16 +147,6 @@ class LinkedList(object):
 
         return self._remove_at_index(index=index)
 
-    def remove(self, value):
-        """
-        A function that removes the first occurence of avalue in the linked list
-
-        :param value: The value to be removed
-        :return: True if removed, else False
-        """
-        index = self.index_of(value)
-        return self._remove_at_index(index)
-
     def _remove_at_index(self, index=False):
         """
         A helper function internally used by pop, remove to remove element at a
@@ -176,10 +167,19 @@ class LinkedList(object):
             return to_remove
         raise ElementNotFoundError
 
+    def remove(self, value):
+        """
+        A function that removes the first occurence of avalue in the linked list
+
+        :param value: The value to be removed
+        :return: True if removed, else False
+        """
+        index = self.index_of(value)
+        return self._remove_at_index(index)
+
     def index_of(self, value):
         """
         Returns the index of first occurence of value in the linked list if found else False
-
         :param value: The value to search for
         :return: The index of first occurence of value in the linked list if found else False
         """
@@ -207,7 +207,6 @@ class LinkedList(object):
         if index == 0:
             new_node.next = self.head
             self.head = new_node
-            # self.size += 1
         elif index == self.size:
             print(index)
             self[index - 1].next = new_node
