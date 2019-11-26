@@ -100,10 +100,13 @@ class LinkedList(object):
         :param other: The second linked list
         :return:
         """
-        assert other
-        for current in self:
-            continue
-        current.next = other.head
+        assert isinstance(other, LinkedList), "Can't add non conforming types"
+        if self.head is None:
+            self.head = other.head
+        else:
+            for current in self:
+                continue
+            current.next = other.head
 
     def get(self, index):
         """

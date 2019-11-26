@@ -131,6 +131,19 @@ class TestLinkedList(unittest.TestCase):
         ll = LinkedList([5])
         self.assertEqual(repr(ll[0]), "Node(5)")
 
+    def test_add(self):
+        ll = LinkedList(range(5))
+        ll2 = LinkedList(range(5, 10))
+
+        ll + ll2
+        self.assertEqual(ll.get_list(), list(range(10)))
+
+        ll = LinkedList()
+        ll + ll2
+        self.assertEqual(ll.get_list(), list(range(5, 10)))
+
+        self.assertEqual(ll.get_list(), list(range(5, 10)))
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
