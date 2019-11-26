@@ -1,6 +1,7 @@
 """A class that emulates a linked list"""
-from SinglyLinkedListNode import Node
-from LinkedListExceptions import *
+
+from linked_list.LinkedListExceptions import *
+from linked_list.SinglyLinkedListNode import *
 
 __author__ = "Rahul Tuli"
 __email__ = "rt3991@rit.edu"
