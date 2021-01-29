@@ -4,8 +4,10 @@ Neatly written data structures in Python! With Tests!
 
 ## Linked Lists
 
-Linked Lists still back some of the most powerful db solutions where write speed are of paramount importance,
-Linked lists offer some significant advantages over other linear data structures. Unlike arrays, they are a dynamic data structure, resizable at run-time. Also, the insertion and deletion operations are efficient and easily implemented.
+The first data structure in this series is Linked Lists!
+
+
+Linked Lists still back some of the most powerful db solutions where write-speeds are important, they offer some significant advantages over other linear data structures. Unlike arrays, they are a dynamic data structure, resizable at run-time. Also, the insertion and deletion operations are efficient and easily implemented.
 
 ## Example Usage
 
