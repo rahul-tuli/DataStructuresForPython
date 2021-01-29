@@ -1,6 +1,6 @@
-# data_structures_python
+# Data Structures in python
 
-Neatly written data structures in Python! With Tests!
+Neatly written data structures in Python! With Tests! Feel feel to use this as-is, or as a base for your own implementation! 
 
 ## Linked Lists
 
