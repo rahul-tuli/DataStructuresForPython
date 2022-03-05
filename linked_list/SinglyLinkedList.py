@@ -23,7 +23,7 @@ class LinkedList(object):
         self.size = 0
         self.extend(values)
 
-    def __str__(self):
+    def __repr__(self):
         """
         A method that returns a string representation of the current Linked List
         :return: string representation of the Linked List
